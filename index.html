@@ -337,6 +337,23 @@
             display: flex;
         }
         
+        .image-preview-note {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--heading-color-1);
+        }
+        
+        .image-preview-note.show {
+            display: flex;
+        }
+        
         .btn-secondary {
             width: 100%;
             max-width: 600px;
@@ -585,6 +602,11 @@
                     <span>Your data has been loaded from previous session</span>
                 </div>
                 
+                <div class="image-preview-note" id="imagePreviewNote">
+                    <span style="font-size: 18px;">🖼️</span>
+                    <span>Profile image loaded from session. No need to upload a new image.</span>
+                </div>
+                
                 <h2 class="section-title">Employee Information</h2>
                 
                 <!-- Image Upload Section -->
@@ -748,6 +770,14 @@
                     document.getElementById('storageInfo').classList.add('show');
                     document.getElementById('clearBtn').style.display = 'flex';
                     
+                    // Show image preview if URL exists
+                    if (data.imageUrl) {
+                        const previewImg = document.getElementById('previewImg');
+                        previewImg.src = data.imageUrl;
+                        previewImg.style.display = 'block';
+                        document.getElementById('imagePreviewNote').classList.add('show');
+                    }
+                    
                     return true;
                 }
             } catch (error) {
@@ -786,6 +816,7 @@
                 document.getElementById('copyBtn').style.display = 'none';
                 document.getElementById('clearBtn').style.display = 'none';
                 document.getElementById('storageInfo').classList.remove('show');
+                document.getElementById('imagePreviewNote').classList.remove('show');
                 
                 showToast('All data cleared successfully', 'success');
             }
@@ -1108,25 +1139,25 @@
                     </td>
                 </tr>
             </table>
-            <div style="font-size: 9.1pt; font-weight: 600; color: #ffffff; margin-bottom: 3px; line-height: 1.2; font-family: Arial, Helvetica, sans-serif; background-color: transparent;">${name}</div>
-            <div style="font-size: 5.5pt; font-weight: 400; color: #ffffff; line-height: 1.3; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px; background-color: transparent;">${title}</div>
+            <div style="font-size: 9.1pt; font-weight: 600; color: #181223; margin-bottom: 3px; line-height: 1.2; font-family: Arial, Helvetica, sans-serif; background-color: transparent;">${name}</div>
+            <div style="font-size: 5.5pt; font-weight: 400; color: #181223; line-height: 1.3; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px; background-color: transparent;">${title}</div>
             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 10px;">
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
-                        <span style="font-weight: 700; color: #ffffff;">Phone:</span>
-                        <a href="tel:${phone}" style="color: #ffffff; text-decoration: none;">${phone}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #181223; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #181223;">Phone:</span>
+                        <a href="tel:${phone}" style="color: #181223; text-decoration: none;">${phone}</a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
-                        <span style="font-weight: 700; color: #ffffff;">Email:</span>
-                        <a href="mailto:${email}" style="color: #ffffff; text-decoration: none;">${email}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #181223; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #181223;">Email:</span>
+                        <a href="mailto:${email}" style="color: #181223; text-decoration: none;">${email}</a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
-                        <span style="font-weight: 700; color: #ffffff;">Website:</span>
-                        <a href="https://${website}" target="_blank" style="color: #ffffff; text-decoration: none;">${website}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #181223; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #181223;">Website:</span>
+                        <a href="https://${website}" target="_blank" style="color: #181223; text-decoration: none;">${website}</a>
                     </td>
                 </tr>
             </table>
@@ -1135,7 +1166,7 @@
                 <tr>${socialIcons.join('')}</tr>
             </table>
             ` : ''}
-            <div style="font-size: 6pt; color: #ffffff; font-weight: 400; font-family: Arial, Helvetica, sans-serif; line-height: 1.3; background-color: transparent;">ISA | Consulting Group</div>
+            <div style="font-size: 6pt; color: #181223; font-weight: 400; font-family: Arial, Helvetica, sans-serif; line-height: 1.3; background-color: transparent;">ISA | Consulting Group</div>
         </td>
     </tr>
     <tr>
