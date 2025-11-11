@@ -572,8 +572,8 @@
         <div class="header">
             <img src="https://isaconsulting.com/logo.png" alt="ISA Consulting" class="header-logo">
             <div class="header-content">
-                <h1>Email Signature Generator</h1>
-                <p>Create professional email signatures for your team</p>
+                <h1>ISA Email Signature Generator</h1>
+                <p>Create ISA email signatures</p>
             </div>
         </div>
         
@@ -733,7 +733,6 @@
                 if (saved) {
                     const data = JSON.parse(saved);
                     
-                    // Populate form fields
                     document.getElementById('imageUrl').value = data.imageUrl || '';
                     document.getElementById('fullName').value = data.fullName || '';
                     document.getElementById('jobTitle').value = data.jobTitle || '';
@@ -746,7 +745,6 @@
                     document.getElementById('instagram').value = data.instagram || 'https://www.instagram.com/isaconsultinggroup';
                     document.getElementById('youtube').value = data.youtube || 'https://www.youtube.com/@isaconsultinggroup';
                     
-                    // Show storage info banner
                     document.getElementById('storageInfo').classList.add('show');
                     document.getElementById('clearBtn').style.display = 'flex';
                     
@@ -760,10 +758,8 @@
         
         function clearAllData() {
             if (confirm('Are you sure you want to clear all saved data? This will reset the form.')) {
-                // Clear localStorage
                 localStorage.removeItem(STORAGE_KEY);
                 
-                // Reset form
                 document.getElementById('imageUrl').value = '';
                 document.getElementById('fullName').value = '';
                 document.getElementById('jobTitle').value = '';
@@ -776,20 +772,17 @@
                 document.getElementById('instagram').value = 'https://www.instagram.com/isaconsultinggroup';
                 document.getElementById('youtube').value = 'https://www.youtube.com/@isaconsultinggroup';
                 
-                // Clear preview
                 document.getElementById('signaturePreview').innerHTML = `
                     <p style="text-align: center; color: #71717a; font-size: 15px; line-height: 1.6;">
                         Fill in the form and click "Generate Signature" to see your professional email signature
                     </p>
                 `;
                 
-                // Clear preview image
                 previewImg.style.display = 'none';
                 previewImg.src = '';
                 imageSizeInfo.textContent = '';
                 fileInput.value = '';
                 
-                // Hide buttons and info
                 document.getElementById('copyBtn').style.display = 'none';
                 document.getElementById('clearBtn').style.display = 'none';
                 document.getElementById('storageInfo').classList.remove('show');
@@ -798,7 +791,6 @@
             }
         }
         
-        // Load saved data when page loads
         window.addEventListener('DOMContentLoaded', () => {
             const loaded = loadFromLocalStorage();
             if (loaded) {
@@ -806,7 +798,6 @@
             }
         });
         
-        // Toast notification system
         function showToast(message, type = 'info') {
             const toastContainer = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -832,7 +823,6 @@
             }, 5000);
         }
         
-        // Tab switching
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -846,7 +836,6 @@
             }
         }
         
-        // File upload handling
         const dropArea = document.getElementById('dropArea');
         const fileInput = document.getElementById('fileInput');
         const previewImg = document.getElementById('previewImg');
@@ -887,25 +876,21 @@
         }
         
         function handleFile(file) {
-            // Validate file type
             const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
             if (!validTypes.includes(file.type)) {
                 showToast('Please upload a valid image file (JPG, PNG, GIF, or WebP)', 'error');
                 return;
             }
             
-            // Validate file size (1MB)
             if (file.size > MAX_FILE_SIZE) {
                 const fileSize = formatFileSize(file.size);
                 showToast(`File size (${fileSize}) exceeds 1MB limit. Please compress your image and try again.`, 'error');
                 return;
             }
             
-            // Show file size
             imageSizeInfo.textContent = `File size: ${formatFileSize(file.size)}`;
             imageSizeInfo.style.color = file.size > MAX_FILE_SIZE * 0.9 ? 'var(--warning-color)' : 'var(--text-gray)';
             
-            // Show preview
             const reader = new FileReader();
             reader.onload = (e) => {
                 previewImg.src = e.target.result;
@@ -914,13 +899,11 @@
             reader.readAsDataURL(file);
         }
         
-        // Upload to AWS S3 via API
         async function uploadToAWS(file) {
             const formData = new FormData();
             formData.append('image', file);
             
             try {
-                // Show loading overlay
                 document.getElementById('loadingOverlay').classList.add('active');
                 progressBar.classList.add('active');
                 progressFill.style.width = '30%';
@@ -936,7 +919,6 @@
                 
                 progressFill.style.width = '100%';
                 
-                // Hide loading overlay
                 setTimeout(() => {
                     document.getElementById('loadingOverlay').classList.remove('active');
                     progressBar.classList.remove('active');
@@ -944,7 +926,6 @@
                 }, 500);
                 
                 if (data.success) {
-                    // Update URL input with uploaded image
                     document.getElementById('imageUrl').value = data.image.url;
                     showToast('Image uploaded successfully to AWS S3!', 'success');
                     return data.image.url;
@@ -952,7 +933,6 @@
                     throw new Error(data.message || 'Upload failed');
                 }
             } catch (error) {
-                // Hide loading overlay
                 document.getElementById('loadingOverlay').classList.remove('active');
                 progressBar.classList.remove('active');
                 progressFill.style.width = '0%';
@@ -963,7 +943,6 @@
             }
         }
         
-        // Validation functions
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
@@ -974,7 +953,7 @@
         }
         
         function validateURL(url) {
-            if (!url) return true; // Optional fields
+            if (!url) return true;
             try {
                 new URL(url.startsWith('http') ? url : `https://${url}`);
                 return true;
@@ -983,7 +962,6 @@
             }
         }
         
-        // Generate signature
         async function generateSignature() {
             const fullName = document.getElementById('fullName').value.trim();
             const jobTitle = document.getElementById('jobTitle').value.trim();
@@ -991,7 +969,6 @@
             const email = document.getElementById('email').value.trim();
             const website = document.getElementById('website').value.trim();
             
-            // Validation
             if (!fullName) {
                 showToast('Please enter full name', 'warning');
                 document.getElementById('fullName').focus();
@@ -1030,11 +1007,10 @@
             
             let imageUrl = document.getElementById('imageUrl').value.trim();
             
-            // If upload tab is active and file is selected, upload it
             if (document.getElementById('upload-tab').classList.contains('active') && fileInput.files.length > 0) {
                 const uploadedUrl = await uploadToAWS(fileInput.files[0]);
                 if (!uploadedUrl) {
-                    return; // Upload failed, error already shown
+                    return;
                 }
                 imageUrl = uploadedUrl;
             }
@@ -1044,7 +1020,6 @@
                 return;
             }
             
-            // Validate image URL format
             if (!validateURL(imageUrl)) {
                 showToast('Please enter a valid image URL', 'warning');
                 return;
@@ -1065,13 +1040,11 @@
             document.getElementById('copyBtn').style.display = 'flex';
             document.getElementById('clearBtn').style.display = 'flex';
             
-            // Save to localStorage
             saveToLocalStorage();
             
             showToast('Signature generated successfully!', 'success');
         }
         
-        // Create signature HTML (myNIME style with white logo)
         function createSignatureHTML(imageUrl, name, title, phone, email, website, linkedin, facebook, twitter, instagram, youtube) {
             const socialIcons = [];
             
@@ -1121,39 +1094,39 @@
             `);
             
             return `
-<table cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 480px; margin: 0; padding: 0; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif;">
+<table cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 480px; margin: 0; padding: 0; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; background-color: #ffffff;">
     <tr>
-        <td valign="middle" style="width: 110px; padding: 8px 12px 8px 0; vertical-align: middle; text-align: center;">
+        <td valign="middle" style="width: 110px; padding: 8px 12px 8px 0; vertical-align: middle; text-align: center; background-color: #ffffff;">
             <img src="${imageUrl}" alt="${name}" style="width: 95px; height: 95px; border-radius: 50%; border: 3px solid #44136e; display: block; margin: 0 auto;">
         </td>
         <td valign="middle" style="width: 3px; background-color: #44136e; padding: 0; vertical-align: middle;"></td>
-        <td valign="middle" style="padding: 8px 0 8px 15px; vertical-align: middle;">
+        <td valign="middle" style="padding: 8px 0 8px 15px; vertical-align: middle; background-color: #ffffff;">
             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 8px;">
                 <tr>
                     <td style="text-align: left; padding: 0;">
-                        <img src="https://isaconsulting.com/logo.png" alt="ISA Consulting" style="height: 45px; width: auto; display: block;">
+                        <img src="https://d1k1pjw4gzhi9s.cloudfront.net/ISA_signature_assets/logo.png" alt="ISA Consulting" style="height: 45px; width: auto; display: block;">
                     </td>
                 </tr>
             </table>
-            <div style="font-size: 9.1pt; font-weight: 600; color: #44136e; margin-bottom: 3px; line-height: 1.2; font-family: Arial, Helvetica, sans-serif;">${name}</div>
-            <div style="font-size: 5.5pt; font-weight: 400; color: #666666; line-height: 1.3; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px;">${title}</div>
+            <div style="font-size: 9.1pt; font-weight: 600; color: #ffffff; margin-bottom: 3px; line-height: 1.2; font-family: Arial, Helvetica, sans-serif; background-color: transparent;">${name}</div>
+            <div style="font-size: 5.5pt; font-weight: 400; color: #ffffff; line-height: 1.3; font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px; background-color: transparent;">${title}</div>
             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 10px;">
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #333333; font-family: Arial, Helvetica, sans-serif; line-height: 1.5;">
-                        <span style="font-weight: 700; color: #333333;">Phone:</span>
-                        <a href="tel:${phone}" style="color: #333333; text-decoration: none;">${phone}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #ffffff;">Phone:</span>
+                        <a href="tel:${phone}" style="color: #ffffff; text-decoration: none;">${phone}</a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #333333; font-family: Arial, Helvetica, sans-serif; line-height: 1.5;">
-                        <span style="font-weight: 700; color: #333333;">Email:</span>
-                        <a href="mailto:${email}" style="color: #333333; text-decoration: none;">${email}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #ffffff;">Email:</span>
+                        <a href="mailto:${email}" style="color: #ffffff; text-decoration: none;">${email}</a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 1px 0; font-size: 6pt; color: #333333; font-family: Arial, Helvetica, sans-serif; line-height: 1.5;">
-                        <span style="font-weight: 700; color: #333333;">Website:</span>
-                        <a href="https://${website}" target="_blank" style="color: #333333; text-decoration: none;">${website}</a>
+                    <td style="padding: 1px 0; font-size: 6pt; color: #ffffff; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; background-color: transparent;">
+                        <span style="font-weight: 700; color: #ffffff;">Website:</span>
+                        <a href="https://${website}" target="_blank" style="color: #ffffff; text-decoration: none;">${website}</a>
                     </td>
                 </tr>
             </table>
@@ -1162,12 +1135,12 @@
                 <tr>${socialIcons.join('')}</tr>
             </table>
             ` : ''}
-            <div style="font-size: 6pt; color: #44136e; font-weight: 400; font-family: Arial, Helvetica, sans-serif; line-height: 1.3;">ISA | Consulting Group</div>
+            <div style="font-size: 6pt; color: #ffffff; font-weight: 400; font-family: Arial, Helvetica, sans-serif; line-height: 1.3; background-color: transparent;">ISA | Consulting Group</div>
         </td>
     </tr>
     <tr>
-        <td colspan="3" style="padding-top: 10px; border-top: 1px solid #e0e0e0;">
-            <p style="margin: 8px 0 0 0; font-size: 6pt; line-height: 1.4; color: #181223; font-family: Arial, Helvetica, sans-serif;">
+        <td colspan="3" style="padding-top: 10px; border-top: 1px solid #e0e0e0; background-color: #ffffff;">
+            <p style="margin: 8px 0 0 0; font-size: 6pt; line-height: 1.4; color: #181223; font-family: Arial, Helvetica, sans-serif; background-color: #ffffff;">
                 <strong>CONFIDENTIALITY NOTICE:</strong> The contents of this email message and any attachments are intended solely for the addressee(s) and may contain confidential and/or privileged information and may be legally protected from disclosure.
             </p>
         </td>
@@ -1176,47 +1149,50 @@
             `;
         }
         
-        // Copy signature to clipboard
         async function copySignature() {
             const signatureHTML = document.getElementById('signaturePreview').innerHTML;
             
             try {
-                // Create a temporary element
-                const temp = document.createElement('div');
-                temp.innerHTML = signatureHTML;
-                temp.style.position = 'absolute';
-                temp.style.left = '-9999px';
-                document.body.appendChild(temp);
+                const blob = new Blob([signatureHTML], { type: 'text/html' });
+                const plainTextBlob = new Blob([signatureHTML.replace(/<[^>]*>/g, '')], { type: 'text/plain' });
                 
-                // Select the content
-                const range = document.createRange();
-                range.selectNode(temp);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
+                const clipboardItem = new ClipboardItem({
+                    'text/html': blob,
+                    'text/plain': plainTextBlob
+                });
                 
-                // Copy to clipboard
-                const success = document.execCommand('copy');
-                
-                // Clean up
-                window.getSelection().removeAllRanges();
-                document.body.removeChild(temp);
-                
-                if (success) {
-                    showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
-                } else {
-                    throw new Error('Copy command failed');
-                }
+                await navigator.clipboard.write([clipboardItem]);
+                showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
             } catch (err) {
-                // Fallback: Try Clipboard API
+                console.error('Clipboard API failed, trying fallback:', err);
+                
                 try {
-                    const blob = new Blob([signatureHTML], { type: 'text/html' });
-                    const clipboardItem = new ClipboardItem({ 'text/html': blob });
-                    await navigator.clipboard.write([clipboardItem]);
+                    const temp = document.createElement('div');
+                    temp.innerHTML = signatureHTML;
+                    temp.style.position = 'absolute';
+                    temp.style.left = '-9999px';
+                    temp.contentEditable = true;
+                    document.body.appendChild(temp);
                     
-                    showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
-                } catch (clipboardErr) {
-                    showToast('Copy failed. Please select and copy manually with Ctrl+C or Cmd+C', 'error');
-                    console.error('Copy error:', err, clipboardErr);
+                    const range = document.createRange();
+                    range.selectNodeContents(temp);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    
+                    const success = document.execCommand('copy');
+                    
+                    selection.removeAllRanges();
+                    document.body.removeChild(temp);
+                    
+                    if (success) {
+                        showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
+                    } else {
+                        throw new Error('Copy command failed');
+                    }
+                } catch (fallbackErr) {
+                    console.error('Fallback copy failed:', fallbackErr);
+                    showToast('Copy failed. Please select the signature manually and press Ctrl+C (or Cmd+C on Mac)', 'error');
                 }
             }
         }
