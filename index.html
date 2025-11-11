@@ -655,22 +655,22 @@
                 
                 <div class="form-group">
                     <label for="facebook">Facebook URL</label>
-                    <input type="url" id="facebook" placeholder="https://www.facebook.com/yourprofile">
+                    <input type="url" id="facebook" value="https://www.facebook.com/ISAconsulting">
                 </div>
                 
                 <div class="form-group">
                     <label for="twitter">X (Twitter) URL</label>
-                    <input type="url" id="twitter" placeholder="https://x.com/yourprofile">
+                    <input type="url" id="twitter" value="https://x.com/isaconsulting">
                 </div>
                 
                 <div class="form-group">
                     <label for="instagram">Instagram URL</label>
-                    <input type="url" id="instagram" placeholder="https://www.instagram.com/yourprofile">
+                    <input type="url" id="instagram" value="https://www.instagram.com/isaconsultinggroup">
                 </div>
                 
                 <div class="form-group">
                     <label for="youtube">YouTube URL</label>
-                    <input type="url" id="youtube" placeholder="https://www.youtube.com/@yourprofile">
+                    <input type="url" id="youtube" value="https://www.youtube.com/@isaconsultinggroup">
                 </div>
                 
                 <button class="btn-primary" onclick="generateSignature()" id="generateBtn">
@@ -741,10 +741,10 @@
                     document.getElementById('email').value = data.email || '';
                     document.getElementById('website').value = data.website || 'www.isaconsulting.com';
                     document.getElementById('linkedin').value = data.linkedin || '';
-                    document.getElementById('facebook').value = data.facebook || '';
-                    document.getElementById('twitter').value = data.twitter || '';
-                    document.getElementById('instagram').value = data.instagram || '';
-                    document.getElementById('youtube').value = data.youtube || '';
+                    document.getElementById('facebook').value = data.facebook || 'https://www.facebook.com/ISAconsulting';
+                    document.getElementById('twitter').value = data.twitter || 'https://x.com/isaconsulting';
+                    document.getElementById('instagram').value = data.instagram || 'https://www.instagram.com/isaconsultinggroup';
+                    document.getElementById('youtube').value = data.youtube || 'https://www.youtube.com/@isaconsultinggroup';
                     
                     // Show storage info banner
                     document.getElementById('storageInfo').classList.add('show');
@@ -771,10 +771,10 @@
                 document.getElementById('email').value = '';
                 document.getElementById('website').value = 'www.isaconsulting.com';
                 document.getElementById('linkedin').value = '';
-                document.getElementById('facebook').value = '';
-                document.getElementById('twitter').value = '';
-                document.getElementById('instagram').value = '';
-                document.getElementById('youtube').value = '';
+                document.getElementById('facebook').value = 'https://www.facebook.com/ISAconsulting';
+                document.getElementById('twitter').value = 'https://x.com/isaconsulting';
+                document.getElementById('instagram').value = 'https://www.instagram.com/isaconsultinggroup';
+                document.getElementById('youtube').value = 'https://www.youtube.com/@isaconsultinggroup';
                 
                 // Clear preview
                 document.getElementById('signaturePreview').innerHTML = `
