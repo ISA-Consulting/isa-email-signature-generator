@@ -589,14 +589,12 @@
 
 <body>
     <div id="toastContainer"></div>
-
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <p class="loading-text">Uploading to AWS S3...</p>
         </div>
     </div>
-
     <div class="container">
         <div class="header">
             <img src="https://isaconsulting.com/logo.png" alt="ISA Consulting" class="header-logo">
@@ -605,21 +603,17 @@
                 <p>Create ISA email signatures</p>
             </div>
         </div>
-
         <div class="main-content">
             <div class="form-section">
                 <div class="storage-info" id="storageInfo">
                     <span style="font-size: 18px;">💾</span>
                     <span>Your data has been loaded from previous session</span>
                 </div>
-
                 <div class="image-preview-note" id="imagePreviewNote">
                     <span style="font-size: 18px;">🖼️</span>
                     <span>Profile image loaded from session. No need to upload a new image.</span>
                 </div>
-
                 <h2 class="section-title">Employee Information</h2>
-
                 <div class="image-upload-section">
                     <label
                         style="font-weight: 600; margin-bottom: 12px; display: block; color: var(--heading-color-1);">
@@ -629,7 +623,6 @@
                         <button class="tab-btn active" onclick="switchTab('upload')">Upload to AWS</button>
                         <button class="tab-btn" onclick="switchTab('url')">Use Image URL</button>
                     </div>
-
                     <div id="upload-tab" class="tab-content active">
                         <div class="file-upload-area" id="dropArea">
                             <input type="file" id="fileInput" class="file-input" accept="image/*">
@@ -642,81 +635,64 @@
                             <div class="progress-fill" id="progressFill"></div>
                         </div>
                     </div>
-
                     <div id="url-tab" class="tab-content">
                         <input type="text" id="imageUrl" class="url-input"
                             placeholder="https://your-cdn.com/profile-image.png">
                         <p class="help-text">📌 Paste your hosted image URL here</p>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="fullName">Full Name <span class="required">*</span></label>
                     <input type="text" id="fullName" placeholder="John Doe" required>
                 </div>
-
                 <div class="form-group">
                     <label for="jobTitle">Job Title <span class="required">*</span></label>
                     <input type="text" id="jobTitle" placeholder="Senior Software Engineer" required>
                 </div>
-
                 <h2 class="section-title" style="margin-top: 35px; font-size: 24px;">Contact Information</h2>
-
                 <div class="form-group">
                     <label for="phone">Phone Number <span class="required">*</span></label>
                     <input type="tel" id="phone" placeholder="+355695805009" required>
                 </div>
-
                 <div class="form-group">
                     <label for="email">Email Address <span class="required">*</span></label>
                     <input type="email" id="email" placeholder="name@isaconsulting.com" required>
                 </div>
-
                 <div class="form-group">
                     <label for="website">Website</label>
                     <input type="url" id="website" value="www.isaconsulting.com">
                 </div>
-
                 <div class="form-group hidden-field">
                     <input type="url" id="linkedin" value="https://www.linkedin.com/company/isaconsulting">
                 </div>
-
                 <div class="form-group hidden-field">
                     <input type="url" id="facebook" value="https://www.facebook.com/ISAconsulting">
                 </div>
-
                 <div class="form-group hidden-field">
                     <input type="url" id="twitter" value="https://x.com/isaconsulting">
                 </div>
-
                 <div class="form-group hidden-field">
                     <input type="url" id="instagram" value="https://www.instagram.com/isaconsultinggroup">
                 </div>
-
                 <div class="form-group hidden-field">
                     <input type="url" id="youtube" value="https://www.youtube.com/@isaconsultinggroup">
                 </div>
-
                 <button class="btn-primary" onclick="generateSignature()" id="generateBtn">
                     <span>Generate Signature</span>
                     <span class="arrow-effect">→</span>
                 </button>
-
                 <button class="btn-clear" onclick="clearAllData()" id="clearBtn" style="display: none;">
                     <span>Clear All Data</span>
                     <span>🗑️</span>
                 </button>
             </div>
-
             <div class="preview-section">
                 <h2 class="section-title" style="text-align: center;">Live Preview</h2>
-
                 <div class="preview-container" id="signaturePreview">
                     <p style="text-align: center; color: #71717a; font-size: 15px; line-height: 1.6;">
                         Fill in the form and click "Generate Signature" to see your professional email signature
                     </p>
                 </div>
-
                 <button class="btn-secondary" onclick="copySignature()" id="copyBtn" style="display: none;">
                     <span>Copy Signature for Outlook</span>
                     <span class="arrow-effect">→</span>
@@ -724,7 +700,6 @@
             </div>
         </div>
     </div>
-
     <script>
         const API_ENDPOINT = 'https://backend.isaconsulting.com/api/v1/upload-employee-signature-image';
         const MAX_FILE_SIZE = 1 * 1024 * 1024;
@@ -753,7 +728,6 @@
                 const saved = localStorage.getItem(STORAGE_KEY);
                 if (saved) {
                     const data = JSON.parse(saved);
-
                     document.getElementById('imageUrl').value = data.imageUrl || '';
                     document.getElementById('fullName').value = data.fullName || '';
                     document.getElementById('jobTitle').value = data.jobTitle || '';
@@ -765,17 +739,14 @@
                     document.getElementById('twitter').value = data.twitter || 'https://x.com/isaconsulting';
                     document.getElementById('instagram').value = data.instagram || 'https://www.instagram.com/isaconsultinggroup';
                     document.getElementById('youtube').value = data.youtube || 'https://www.youtube.com/@isaconsultinggroup';
-
                     document.getElementById('storageInfo').classList.add('show');
                     document.getElementById('clearBtn').style.display = 'flex';
-
                     if (data.imageUrl) {
                         const previewImg = document.getElementById('previewImg');
                         previewImg.src = data.imageUrl;
                         previewImg.style.display = 'block';
                         document.getElementById('imagePreviewNote').classList.add('show');
                     }
-
                     return true;
                 }
             } catch (error) {
@@ -787,7 +758,6 @@
         function clearAllData() {
             if (confirm('Are you sure you want to clear all saved data? This will reset the form.')) {
                 localStorage.removeItem(STORAGE_KEY);
-
                 document.getElementById('imageUrl').value = '';
                 document.getElementById('fullName').value = '';
                 document.getElementById('jobTitle').value = '';
@@ -799,23 +769,19 @@
                 document.getElementById('twitter').value = 'https://x.com/isaconsulting';
                 document.getElementById('instagram').value = 'https://www.instagram.com/isaconsultinggroup';
                 document.getElementById('youtube').value = 'https://www.youtube.com/@isaconsultinggroup';
-
                 document.getElementById('signaturePreview').innerHTML = `
                     <p style="text-align: center; color: #71717a; font-size: 15px; line-height: 1.6;">
                         Fill in the form and click "Generate Signature" to see your professional email signature
                     </p>
                 `;
-
                 previewImg.style.display = 'none';
                 previewImg.src = '';
                 imageSizeInfo.textContent = '';
                 fileInput.value = '';
-
                 document.getElementById('copyBtn').style.display = 'none';
                 document.getElementById('clearBtn').style.display = 'none';
                 document.getElementById('storageInfo').classList.remove('show');
                 document.getElementById('imagePreviewNote').classList.remove('show');
-
                 showToast('All data cleared successfully', 'success');
             }
         }
@@ -831,21 +797,17 @@
             const toastContainer = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast toast-${type} show`;
-
             const icon = {
                 success: '✅',
                 error: '❌',
                 warning: '⚠️',
                 info: 'ℹ️'
             }[type] || 'ℹ️';
-
             toast.innerHTML = `
                 <span style="font-size: 20px;">${icon}</span>
                 <span>${message}</span>
             `;
-
             toastContainer.appendChild(toast);
-
             setTimeout(() => {
                 toast.style.animation = 'slideIn 0.3s ease reverse';
                 setTimeout(() => toast.remove(), 300);
@@ -855,7 +817,6 @@
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
             if (tab === 'upload') {
                 document.querySelector('.tab-btn:first-child').classList.add('active');
                 document.getElementById('upload-tab').classList.add('active');
@@ -873,16 +834,13 @@
         const progressFill = document.getElementById('progressFill');
 
         dropArea.addEventListener('click', () => fileInput.click());
-
         dropArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropArea.classList.add('dragover');
         });
-
         dropArea.addEventListener('dragleave', () => {
             dropArea.classList.remove('dragover');
         });
-
         dropArea.addEventListener('drop', (e) => {
             e.preventDefault();
             dropArea.classList.remove('dragover');
@@ -891,7 +849,6 @@
                 handleFile(files[0]);
             }
         });
-
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 handleFile(e.target.files[0]);
@@ -910,16 +867,13 @@
                 showToast('Please upload a valid image file (JPG, PNG, GIF, or WebP)', 'error');
                 return;
             }
-
             if (file.size > MAX_FILE_SIZE) {
                 const fileSize = formatFileSize(file.size);
                 showToast(`File size (${fileSize}) exceeds 1MB limit. Please compress your image and try again.`, 'error');
                 return;
             }
-
             imageSizeInfo.textContent = `File size: ${formatFileSize(file.size)}`;
             imageSizeInfo.style.color = file.size > MAX_FILE_SIZE * 0.9 ? 'var(--warning-color)' : 'var(--text-gray)';
-
             const reader = new FileReader();
             reader.onload = (e) => {
                 previewImg.src = e.target.result;
@@ -931,29 +885,22 @@
         async function uploadToAWS(file) {
             const formData = new FormData();
             formData.append('image', file);
-
             try {
                 document.getElementById('loadingOverlay').classList.add('active');
                 progressBar.classList.add('active');
                 progressFill.style.width = '30%';
-
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     body: formData,
                 });
-
                 progressFill.style.width = '70%';
-
                 const data = await response.json();
-
                 progressFill.style.width = '100%';
-
                 setTimeout(() => {
                     document.getElementById('loadingOverlay').classList.remove('active');
                     progressBar.classList.remove('active');
                     progressFill.style.width = '0%';
                 }, 500);
-
                 if (data.success) {
                     document.getElementById('imageUrl').value = data.image.url;
                     showToast('Image uploaded successfully to AWS S3!', 'success');
@@ -965,7 +912,6 @@
                 document.getElementById('loadingOverlay').classList.remove('active');
                 progressBar.classList.remove('active');
                 progressFill.style.width = '0%';
-
                 console.error('Upload error:', error);
                 showToast(error.message || 'Upload failed. Please try again.', 'error');
                 return null;
@@ -997,45 +943,37 @@
             const phone = document.getElementById('phone').value.trim();
             const email = document.getElementById('email').value.trim();
             const website = document.getElementById('website').value.trim();
-
             if (!fullName) {
                 showToast('Please enter full name', 'warning');
                 document.getElementById('fullName').focus();
                 return;
             }
-
             if (!jobTitle) {
                 showToast('Please enter job title', 'warning');
                 document.getElementById('jobTitle').focus();
                 return;
             }
-
             if (!phone) {
                 showToast('Please enter phone number', 'warning');
                 document.getElementById('phone').focus();
                 return;
             }
-
             if (!validatePhone(phone)) {
                 showToast('Please enter a valid phone number (minimum 8 digits)', 'warning');
                 document.getElementById('phone').focus();
                 return;
             }
-
             if (!email) {
                 showToast('Please enter email address', 'warning');
                 document.getElementById('email').focus();
                 return;
             }
-
             if (!validateEmail(email)) {
                 showToast('Please enter a valid email address', 'warning');
                 document.getElementById('email').focus();
                 return;
             }
-
             let imageUrl = document.getElementById('imageUrl').value.trim();
-
             if (document.getElementById('upload-tab').classList.contains('active') && fileInput.files.length > 0) {
                 const uploadedUrl = await uploadToAWS(fileInput.files[0]);
                 if (!uploadedUrl) {
@@ -1043,39 +981,33 @@
                 }
                 imageUrl = uploadedUrl;
             }
-
             if (!imageUrl) {
                 showToast('Please provide an image URL or upload an image', 'warning');
                 return;
             }
-
             if (!validateURL(imageUrl)) {
                 showToast('Please enter a valid image URL', 'warning');
                 return;
             }
-
             const linkedin = document.getElementById('linkedin').value.trim();
             const facebook = document.getElementById('facebook').value.trim();
             const twitter = document.getElementById('twitter').value.trim();
             const instagram = document.getElementById('instagram').value.trim();
             const youtube = document.getElementById('youtube').value.trim();
-
             const signatureHTML = createSignatureHTML(
                 imageUrl, fullName, jobTitle, phone, email, website,
                 linkedin, facebook, twitter, instagram, youtube
             );
-
             document.getElementById('signaturePreview').innerHTML = signatureHTML;
             document.getElementById('copyBtn').style.display = 'flex';
             document.getElementById('clearBtn').style.display = 'flex';
-
             saveToLocalStorage();
-
             showToast('Signature generated successfully!', 'success');
         }
 
         function createSignatureHTML(imageUrl, name, title, phone, email, website, linkedin, facebook, twitter, instagram, youtube) {
             const socialIcons = [];
+            const titleUpperCase = title.toUpperCase();
 
             if (linkedin) socialIcons.push(`
                 <td style="padding-right: 5px;">
@@ -1085,7 +1017,6 @@
                     </a>
                 </td>
             `);
-
             if (facebook) socialIcons.push(`
                 <td style="padding-right: 5px;">
                     <a href="${facebook}" target="_blank" title="Facebook" style="display: inline-block; border-radius: 2px; padding: 2px;">
@@ -1094,7 +1025,6 @@
                     </a>
                 </td>
             `);
-
             if (twitter) socialIcons.push(`
                 <td style="padding-right: 5px;">
                     <a href="${twitter}" target="_blank" title="X" style="display: inline-block; border-radius: 2px; padding: 2px;">
@@ -1103,7 +1033,6 @@
                     </a>
                 </td>
             `);
-
             if (instagram) socialIcons.push(`
                 <td style="padding-right: 5px;">
                     <a href="${instagram}" target="_blank" title="Instagram" style="display: inline-block; border-radius: 2px; padding: 2px;">
@@ -1112,7 +1041,6 @@
                     </a>
                 </td>
             `);
-
             if (youtube) socialIcons.push(`
                 <td>
                     <a href="${youtube}" target="_blank" title="YouTube" style="display: inline-block; border-radius: 2px; padding: 2px;">
@@ -1128,7 +1056,7 @@
         <td valign="top" style="width: 130px; padding: 8px 12px 8px 0; vertical-align: top; text-align: center; background-color: #ffffff;">
             <img src="${imageUrl}" alt="${name}" style="width: 95px; height: 95px; border-radius: 50%; border: 1px solid #181223; display: block; margin: 0 auto 8px auto;">
             <div style="font-size: 11pt; font-weight: 600; color: #181223; margin-bottom: 2px; line-height: 1.2; font-family: 'Montserrat', Arial, sans-serif; text-align: center;">${name}</div>
-            <div style="font-size: 9pt; font-weight: 400; color: #181223; line-height: 1.3; font-family: 'Montserrat', Arial, sans-serif; text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">${title}</div>
+            <div style="font-size: 9pt; font-weight: 400; color: #181223; line-height: 1.3; font-family: 'Montserrat', Arial, sans-serif; text-align: center; letter-spacing: 0.5px;">${titleUpperCase}</div>
         </td>
         <td valign="top" style="width: 1px; background-color: #9c9c9c; padding: 0; vertical-align: top;"></td>
         <td valign="top" style="padding: 8px 0 8px 15px; vertical-align: top; background-color: #ffffff;">
@@ -1143,19 +1071,19 @@
                 <tr>
                     <td style="padding: 1px 0; font-size: 8pt; color: #000000; font-family: 'Montserrat', Arial, sans-serif; line-height: 1.6; background-color: transparent;">
                         <span style="font-weight: 700; color: #000000;">Phone:</span>
-                        <a href="tel:${phone}" style="color: #000000; text-decoration: none;">${phone}</a>
+                        <a href="tel:${phone}" style="color: #000000 !important; text-decoration: none;"><span style="color: #000000;">${phone}</span></a>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 1px 0; font-size: 8pt; color: #000000; font-family: 'Montserrat', Arial, sans-serif; line-height: 1.6; background-color: transparent;">
                         <span style="font-weight: 700; color: #000000;">Email:</span>
-                        <a href="mailto:${email}" style="color: #000000; text-decoration: none;">${email}</a>
+                        <a href="mailto:${email}" style="color: #000000 !important; text-decoration: none;"><span style="color: #000000;">${email}</span></a>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 1px 0; font-size: 8pt; color: #000000; font-family: 'Montserrat', Arial, sans-serif; line-height: 1.6; background-color: transparent;">
                         <span style="font-weight: 700; color: #000000;">Website:</span>
-                        <a href="https://${website}" target="_blank" style="color: #000000; text-decoration: none;">${website}</a>
+                        <a href="https://${website}" target="_blank" style="color: #000000 !important; text-decoration: none;"><span style="color: #000000;">${website}</span></a>
                     </td>
                 </tr>
             </table>
@@ -1186,21 +1114,17 @@
 
         async function copySignature() {
             const signatureHTML = document.getElementById('signaturePreview').innerHTML;
-
             try {
                 const blob = new Blob([signatureHTML], { type: 'text/html' });
                 const plainTextBlob = new Blob([signatureHTML.replace(/<[^>]*>/g, '')], { type: 'text/plain' });
-
                 const clipboardItem = new ClipboardItem({
                     'text/html': blob,
                     'text/plain': plainTextBlob
                 });
-
                 await navigator.clipboard.write([clipboardItem]);
                 showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
             } catch (err) {
                 console.error('Clipboard API failed, trying fallback:', err);
-
                 try {
                     const temp = document.createElement('div');
                     temp.innerHTML = signatureHTML;
@@ -1208,18 +1132,14 @@
                     temp.style.left = '-9999px';
                     temp.contentEditable = true;
                     document.body.appendChild(temp);
-
                     const range = document.createRange();
                     range.selectNodeContents(temp);
                     const selection = window.getSelection();
                     selection.removeAllRanges();
                     selection.addRange(range);
-
                     const success = document.execCommand('copy');
-
                     selection.removeAllRanges();
                     document.body.removeChild(temp);
-
                     if (success) {
                         showToast('Signature copied! Now paste it into Outlook signature settings.', 'success');
                     } else {
